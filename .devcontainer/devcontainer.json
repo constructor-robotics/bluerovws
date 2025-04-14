@@ -1,0 +1,35 @@
+{
+	"name": "BlueROV2 Workspace setup",
+	"privileged": true,
+	"remoteUser": "bluerovuser",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "bluerovws",
+  "workspaceFolder": "/home/bluerovuser/volumeROS",
+//	"onCreateCommand": "source /opt/ros/humble/setup.bash",
+  // "postStartCommand": "nohup bash -c 'your-command-here &'",
+  "customizations": {
+//    "vscode": {
+//      // Add the IDs of extensions you want installed when the container is created.
+//      "extensions": ["ms-vscode.cpptools",
+//                    "ms-vscode.cpptools-themes",
+//                    "twxs.cmake",
+//                    "donjayamanne.python-extension-pack",
+//                    "eamodio.gitlens",
+//                    "ms-iot.vscode-ros",
+//                  "ms-vscode.cmake-tools"]
+//    },
+  },
+}
+
+// {
+//   // "image": "mcr.microsoft.com/devcontainers/typescript-node",
+//   "dockerComposeFile": "docker-compose.yml",
+//   "service": "bluerovws",
+//   "workspaceFolder": "/home/bluerovuser/volumeROS",
+//   "customizations": {
+//     "vscode": {
+//       "extensions": ["streetsidesoftware.code-spell-checker"]
+//     }
+//   },
+//   "forwardPorts": [3000]
+// }

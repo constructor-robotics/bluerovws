@@ -46,6 +46,7 @@ RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt install ros-dev-tools -y
 RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt upgrade -y
 
 RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt install ros-$ROS_DISTRO-desktop -y
+# foxglove as alternative to RVIZ. Since it has a better visualization and can be used outside of Docker natively on Mac/Linux
 RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt install ros-$ROS_DISTRO-foxglove-bridge -y
 #RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt install ros-$ROS_DISTRO-open3d-conversions -y
 

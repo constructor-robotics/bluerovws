@@ -5,13 +5,14 @@ services:
       dockerfile: .devcontainer/Dockerfile
 #    command: /bin/sh -c "while sleep 1000; do :; done"
     # command: sleep infinity
+    command: tail -f /dev/null
     privileged: true    # <-- this one
     tmpfs:
      - /dev/shm:size=4g  # Increased to 4GB
     environment:
-      - DISPLAY=docker.for.mac.host.internal:0
+      - DISPLAY=${DISPLAY}
       - LIBGL_ALWAYS_INDIRECT=1
-    #      - ES_JAVA_OPTS=-Xms512m -Xmx512m -XX:UseSVE=0
+#      - ES_JAVA_OPTS=-Xms512m -Xmx512m -XX:UseSVE=0
 #      - CLI_JAVA_OPTS=-XX:UseSVE=0
 #      - JAVA_TOOL_OPTIONS=-XX:UseSVE=0
 #      - node.name=elasticsearch

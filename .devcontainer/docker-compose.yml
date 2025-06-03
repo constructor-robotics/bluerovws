@@ -3,6 +3,7 @@ services:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
+#      network: host
 #    command: /bin/sh -c "while sleep 1000; do :; done"
     # command: sleep infinity
     privileged: true    # <-- this one
@@ -20,7 +21,7 @@ services:
 #      - cluster.routing.allocation.disk.threshold_enabled=false
 #      - xpack.security.enabled=false
 #      - DISPLAY=docker.for.mac.host.internal:0
-#      - ROS_DOMAIN_ID=161
+      - ROS_DOMAIN_ID=161
 #      - AMENT_PREFIX_PATH=/home/tim-external/ros_ws/install/gui_bluerov:/home/tim-external/ros_ws/install/bluerov2common:/home/tim-external/ros_ws/install/waterlinked_a50:/home/tim-external/ros_ws/install/vision_opencv:/home/tim-external/ros_ws/install/fsregistration:/home/tim-external/ros_ws/install/soft20:/home/tim-external/ros_ws/install/ros2_kitti_publishers:/home/tim-external/ros_ws/install/px4_msgs:/home/tim-external/ros_ws/install/ping360_sonar:/home/tim-external/ros_ws/install/ping360_sonar_msgs:/home/tim-external/ros_ws/install/opencv_tests:/home/tim-external/ros_ws/install/mocap4r2_msgs:/home/tim-external/ros_ws/install/micron_driver_ros:/home/tim-external/ros_ws/install/image_geometry:/home/tim-external/ros_ws/install/cv_bridge:/home/tim-external/ros_ws/install/bluerov2commonmsgs:/home/tim-external/ros_ws/install/bluespace_ai_xsens_mti_driver:/home/tim-external/ros_ws/install/asvcommonmsg:/opt/ros/humble
 #      - CMAKE_PREFIX_PATH=/home/tim-external/ros_ws/install/gui_bluerov:/home/tim-external/ros_ws/install/bluerov2common:/home/tim-external/ros_ws/install/waterlinked_a50:/home/tim-external/ros_ws/install/vision_opencv:/home/tim-external/ros_ws/install/fsregistration:/home/tim-external/ros_ws/install/soft20:/home/tim-external/ros_ws/install/ros2_kitti_publishers:/home/tim-external/ros_ws/install/px4_msgs:/home/tim-external/ros_ws/install/ping360_sonar:/home/tim-external/ros_ws/install/ping360_sonar_msgs:/home/tim-external/ros_ws/install/mocap4r2_msgs:/home/tim-external/ros_ws/install/micron_driver_ros:/home/tim-external/ros_ws/install/image_geometry:/home/tim-external/ros_ws/install/cv_bridge:/home/tim-external/ros_ws/install/bluerov2commonmsgs:/home/tim-external/ros_ws/install/bluespace_ai_xsens_mti_driver:/home/tim-external/ros_ws/install/asvcommonmsg
 #      - COLCON_PREFIX_PATH=/home/tim-external/ros_ws/install
@@ -42,11 +43,17 @@ services:
       - ../cache/humble/log:/home/bluerovuser/ros_ws/log:cached,
       - ../src:/home/bluerovuser/ros_ws/src:cached,
       - /tmp/.X11-unix:/tmp/.X11-unix
-    # ports:
-    #   - 127.0.0.1:8765:8765
-    #   - 127.0.0.1:2000:2000
+#    ports:
+#      - "8080:80"
+#      - 127.0.0.1:8765:8765
+#      - 127.0.0.1:2000:2000
     # Overrides default command so things don't shut down after the process ends.
-   
 
+#    network_mode: bridge
+#    ports:
+#      - "7400:7400/udp"
+#      - "7410:7410/udp"
+#      - "7420:7420/udp"
+#      - "25000-25100:25000-25100/udp"
     # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
-#    network_mode: "host"
+    network_mode: host

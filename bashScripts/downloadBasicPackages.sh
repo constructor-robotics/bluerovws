@@ -11,8 +11,8 @@ git clone git@github.com:constructor-robotics/waterlinked_a50.git
 git clone git@github.com:constructor-robotics/gui_bluerov.git
 git clone git@github.com:constructor-robotics/bluerov2commonmsgs.git
 git clone git@github.com:constructor-robotics/bluerov2common.git
-git clone -b release/1.14 git@github.com:PX4/px4_msgs.git
-
-
+git clone -b release/1.15 git@github.com:PX4/px4_msgs.git
+git clone -b main git@github.com:Auterion/px4-ros2-interface-lib.git
+# this github repo has to be checked out at tag 1.4.0
 
 popd

@@ -58,8 +58,9 @@ RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt-get update && sudo apt-get -y i
 RUN sudo apt install nlohmann-json3-dev -y
 RUN sudo apt install libqt5gamepad5-dev -y
 RUN sudo apt install libcgal-dev -y
-RUN sudo apt install unzip nano net-tools nmap -y
+RUN sudo apt install unzip nano net-tools nmap inetutils-ping -y
 RUN sudo apt install openssh-client -y
+
 #COPY otherPackages/PX4-Autopilot/Tools/setup/ubuntu.sh /home/$USERNAME/install_ws
 #WORKDIR /home/$USERNAME/install_ws
 #RUN mkdir -p -m 0600 ~/.ssh
@@ -82,8 +83,7 @@ RUN #echo "COLCON_DEFAULTS_FILE=/home/$USERNAME/ros_ws/configFiles/defaultColcon
 RUN echo "source /opt/ros/humble/setup.bash">> ~/.bashrc
 RUN echo "source /home/$USERNAME/ros_ws/install/setup.bash">> ~/.bashrc
 
-RUN echo "source /opt/ros/humble/setup.bash">> ~/.profile
-RUN echo "source /home/$USERNAME/ros_ws/install/setup.bash">> ~/.profile
+RUN echo "export ROS_DOMAIN_ID=161">> ~/.bashrc
 
 # COPY docker-entrypoint.sh /
 # RUN chmod +x /docker-entrypoint.sh

@@ -82,8 +82,12 @@ RUN #echo "source activate base">> ~/.bashrc
 RUN #echo "COLCON_DEFAULTS_FILE=/home/$USERNAME/ros_ws/configFiles/defaultColconSettings.yaml">> ~/.bashrc
 RUN echo "source /opt/ros/humble/setup.bash">> ~/.bashrc
 RUN echo "source /home/$USERNAME/ros_ws/install/setup.bash">> ~/.bashrc
-
 RUN echo "export ROS_DOMAIN_ID=161">> ~/.bashrc
+# profile because of clion connection, so that you can compile ROS inside the IDE
+RUN echo "source /opt/ros/humble/setup.bash">> ~/.profile
+RUN echo "source /home/$USERNAME/ros_ws/install/setup.bash">> ~/.profile
+RUN echo "export ROS_DOMAIN_ID=161">> ~/.profile
+
 
 # COPY docker-entrypoint.sh /
 # RUN chmod +x /docker-entrypoint.sh

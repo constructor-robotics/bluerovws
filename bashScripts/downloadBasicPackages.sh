@@ -11,9 +11,10 @@ git clone git@github.com:constructor-robotics/waterlinked_a50.git
 git clone git@github.com:constructor-robotics/gui_bluerov.git
 git clone git@github.com:constructor-robotics/bluerov2commonmsgs.git
 git clone git@github.com:constructor-robotics/bluerov2common.git
-#PX4 version is 1.16
-git clone git@github.com:timzarhansen/px4_msgs.git
+#PX4 checkout
+git clone -b uuv_bluerov git@github.com:timzarhansen/px4_msgs.git
+# this github repo has to be checked out at tag 1.5.0 can be automated too
 git clone -b main git@github.com:Auterion/px4-ros2-interface-lib.git
-# this github repo has to be checked out at tag 1.4.0
+
 
 popd

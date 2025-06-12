@@ -32,7 +32,8 @@ RUN sudo DEBIAN_FRONTEND=noninteractive sudo locale-gen de_DE de_DE.UTF-8
 RUN sudo DEBIAN_FRONTEND=noninteractive sudo update-locale LC_ALL=de_DE.UTF-8 LANG=de_DE.UTF-8
 RUN export LANG=de_DE.UTF-8
 RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt-get install -y tzdata
-RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt install -y libboost-all-dev
+RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt install -y libboost-all-dev bash-completion
+
 
 
 
@@ -76,6 +77,9 @@ WORKDIR /home/$USERNAME/
 WORKDIR /home/$USERNAME/
 #ENV ROS_DISTRO=humble
 ENV SHELL=/bin/bash
+
+
+RUN echo 'if [ -f /etc/bash_completion ]; then . /etc/bash_completion; fi' >> ~/.bashrc
 
 RUN echo "PS1='\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\[\033[1;31m\]$\[\033[0m\] ' "  >> ~/.bashrc
 RUN #echo "source activate base">> ~/.bashrc

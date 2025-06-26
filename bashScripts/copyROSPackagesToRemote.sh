@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# this script has to run from inside "bluerovws" by: source bashScripts/copyROSPackagesToBlueROV.sh
+# it copies the desired packages from your local setup to the pis. Ensure that ~/ros_ws/src exists on the pis
+
+copyFolder1_ws () {
+#  ssh parallels@$1 mkdir -p ~/ros_ws/src/$2
+
+  rsync -avh src/$2/ parallels@$1:~/ros_ws/src/$2 --exclude=cmake-build-debug --exclude=build --exclude=.git --exclude=.idea --exclude=cmake-build-release --delete
+}
+
+
+#Sensor Tube
+IP_ADDRESS="10.211.55.8"
+
+copyFolder1_ws "$IP_ADDRESS" "bluerov2common"
+copyFolder1_ws "$IP_ADDRESS" "bluerov2commonmsgs"
+copyFolder1_ws "$IP_ADDRESS" "ping360_sonar_msgs"
+copyFolder1_ws "$IP_ADDRESS" "ping360_sonar"
+copyFolder1_ws "$IP_ADDRESS" "gui_bluerov"
+copyFolder1_ws "$IP_ADDRESS" "micron_driver_ros"
+copyFolder1_ws "$IP_ADDRESS" "px4_msgs"
+copyFolder1_ws "$IP_ADDRESS" "px4-ros2-interface-lib"
+copyFolder1_ws "$IP_ADDRESS" "waterlinked_a50"
+copyFolder1_ws "$IP_ADDRESS" "ping360_sonar"
+copyFolder1_ws "$IP_ADDRESS" "bluespace_ai_xsens_mti_driver"

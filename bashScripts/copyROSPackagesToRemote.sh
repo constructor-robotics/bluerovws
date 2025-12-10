@@ -11,7 +11,7 @@ copyFolder1_ws () {
 
 
 #Sensor Tube
-IP_ADDRESS="10.211.55.8"
+IP_ADDRESS="192.168.10.4"
 
 copyFolder1_ws "$IP_ADDRESS" "bluerov2common"
 copyFolder1_ws "$IP_ADDRESS" "bluerov2commonmsgs"
@@ -22,5 +22,4 @@ copyFolder1_ws "$IP_ADDRESS" "micron_driver_ros"
 copyFolder1_ws "$IP_ADDRESS" "px4_msgs"
 copyFolder1_ws "$IP_ADDRESS" "px4-ros2-interface-lib"
 copyFolder1_ws "$IP_ADDRESS" "waterlinked_a50"
-copyFolder1_ws "$IP_ADDRESS" "ping360_sonar"
 copyFolder1_ws "$IP_ADDRESS" "bluespace_ai_xsens_mti_driver"

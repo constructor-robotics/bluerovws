@@ -31,7 +31,7 @@ MACOS:
 4. Permanent: sudo sh -c 'echo "net.inet.ip.forwarding=1" >> /etc/sysctl.conf'
 5. sudo pfctl -f /etc/pf.conf
 6. sudo pfctl -e   
-7. sudo pfctl -n -f /etc/pf.conf
+7. c
 
 
 

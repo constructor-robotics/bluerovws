@@ -11,8 +11,8 @@ copyFolder1_ws () {
 
 
 #Sensor Tube
-IP_ADDRESS="192.168.10.4"
-
+#IP_ADDRESS="192.168.10.4"
+IP_ADDRESS="10.60.41.56"
 copyFolder1_ws "$IP_ADDRESS" "bluerov2common"
 copyFolder1_ws "$IP_ADDRESS" "bluerov2commonmsgs"
 copyFolder1_ws "$IP_ADDRESS" "ping360_sonar_msgs"

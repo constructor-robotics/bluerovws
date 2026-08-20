@@ -74,7 +74,7 @@ RUN if [ -d /opt/ros/humble/include/cv_bridge/cv_bridge ]; then \
 # The arm64 rebuilds use pkg-scoped -isystem dirs (include/<pkg>); the classic
 # includes (<pkg>/...) and transitive core headers (rosidl_runtime_cpp/...)
 # additionally need the ROOT include dir - make colcon pass it to all builds.
-RUN printf 'build:\n  cmake-args:\n    - "-DCMAKE_CXX_FLAGS=-isystem /opt/ros/humble/include"\n' > /etc/colcon/defaults.yaml
+RUN sudo mkdir -p /etc/colcon && printf 'build:\n  cmake-args:\n    - "-DCMAKE_CXX_FLAGS=-isystem /opt/ros/humble/include"\n' | sudo tee /etc/colcon/defaults.yaml > /dev/null
 
 #COPY otherPackages/PX4-Autopilot/Tools/setup/ubuntu.sh /home/$USERNAME/install_ws
 #WORKDIR /home/$USERNAME/install_ws

@@ -22,9 +22,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
 
 USER $USERNAME
 
-
-
-WORKDIR /home/$USERNAME/install_ws
+WORKDIR /home/$USERNAME/
 
 #ROS
 RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt update && sudo DEBIAN_FRONTEND=noninteractive sudo apt install -y locales
@@ -44,7 +42,6 @@ RUN sudo DEBIAN_FRONTEND=noninteractive sudo curl -sSL https://raw.githubusercon
 RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
 RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt update
 RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt install ros-dev-tools -y
-RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt upgrade -y
 
 RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt install ros-$ROS_DISTRO-desktop -y
 # foxglove as alternative to RVIZ. Since it has a better visualization and can be used outside of Docker natively on Mac/Linux
@@ -54,7 +51,6 @@ RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt install ros-$ROS_DISTRO-foxglov
 
 
 # custom stuff
-RUN #sudo apt-get update && sudo apt-get -y install python3 python3-pip
 RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt-get update && sudo apt-get -y install python3-pip
 RUN sudo apt install nlohmann-json3-dev -y
 RUN sudo apt install libqt5gamepad5-dev -y
@@ -88,22 +84,18 @@ RUN sudo DEBIAN_FRONTEND=noninteractive sudo rosdep init && rosdep update --rosd
 
 WORKDIR /home/$USERNAME/
 
-WORKDIR /home/$USERNAME/
-#ENV ROS_DISTRO=humble
 ENV SHELL=/bin/bash
 
 
 RUN echo 'if [ -f /etc/bash_completion ]; then . /etc/bash_completion; fi' >> ~/.bashrc
 
 RUN echo "PS1='\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\[\033[1;31m\]$\[\033[0m\] ' "  >> ~/.bashrc
-RUN #echo "source activate base">> ~/.bashrc
-RUN #echo "COLCON_DEFAULTS_FILE=/home/$USERNAME/ros_ws/configFiles/defaultColconSettings.yaml">> ~/.bashrc
 RUN echo "source /opt/ros/humble/setup.bash">> ~/.bashrc
-RUN echo "[ -f /home/$USERNAME/ros_ws/install/setup.bash ] && source /home/$USERNAME/ros_ws/install/setup.bash">> ~/.bashrc
+RUN echo "[ -f /home/$USERNAME/ros_ws/install/setup.bash ] && source /home/$USERNAME/ros_ws/install/setup.bash 2>/dev/null">> ~/.bashrc
 RUN echo "export ROS_DOMAIN_ID=161">> ~/.bashrc
 # profile because of clion connection, so that you can compile ROS inside the IDE
 RUN echo "source /opt/ros/humble/setup.bash">> ~/.profile
-RUN echo "[ -f /home/$USERNAME/ros_ws/install/setup.bash ] && source /home/$USERNAME/ros_ws/install/setup.bash">> ~/.profile
+RUN echo "[ -f /home/$USERNAME/ros_ws/install/setup.bash ] && source /home/$USERNAME/ros_ws/install/setup.bash 2>/dev/null">> ~/.profile
 RUN echo "export ROS_DOMAIN_ID=161">> ~/.profile
 
 
@@ -111,4 +103,5 @@ RUN echo "export ROS_DOMAIN_ID=161">> ~/.profile
 # RUN chmod +x /docker-entrypoint.sh
 # ENTRYPOINT [ "/docker-entrypoint.sh" ]
 
+RUN sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
  CMD ["/bin/sh", "-c", "while sleep 1000; do :; done"]

@@ -68,8 +68,8 @@ RUN sudo apt install -y ros-$ROS_DISTRO-cv-bridge ros-$ROS_DISTRO-tf2 ros-$ROS_D
 # classic <cv_bridge/cv_bridge.hpp>. Add compat symlinks ONLY where the nested
 # layout exists (arm64) - on amd64 the classic headers are already in place.
 RUN if [ -d /opt/ros/humble/include/cv_bridge/cv_bridge ]; then \
-        ln -s cv_bridge/cv_bridge.h /opt/ros/humble/include/cv_bridge/cv_bridge.hpp; \
-        ln -s cv_bridge.h /opt/ros/humble/include/cv_bridge/cv_bridge/cv_bridge.hpp; \
+        sudo ln -s cv_bridge/cv_bridge.h /opt/ros/humble/include/cv_bridge/cv_bridge.hpp; \
+        sudo ln -s cv_bridge.h /opt/ros/humble/include/cv_bridge/cv_bridge/cv_bridge.hpp; \
     fi
 # The arm64 rebuilds use pkg-scoped -isystem dirs (include/<pkg>); the classic
 # includes (<pkg>/...) and transitive core headers (rosidl_runtime_cpp/...)

@@ -1,0 +1,31 @@
+[submodule "src/waterlinked_a50"]
+	path = src/waterlinked_a50
+	url = git@github.com:constructor-robotics/waterlinked_a50.git
+[submodule "src/bluerov2common"]
+	path = src/bluerov2common
+	url = git@github.com:constructor-robotics/bluerov2common.git
+[submodule "src/bluerov2commonmsgs"]
+	path = src/bluerov2commonmsgs
+	url = git@github.com:constructor-robotics/bluerov2commonmsgs.git
+[submodule "src/bluespace_ai_xsens_mti_driver"]
+	path = src/bluespace_ai_xsens_mti_driver
+	url = git@github.com:constructor-robotics/bluespace_ai_xsens_mti_driver.git
+[submodule "src/gui_bluerov"]
+	path = src/gui_bluerov
+	url = git@github.com:constructor-robotics/gui_bluerov.git
+[submodule "src/micron_driver_ros"]
+	path = src/micron_driver_ros
+	url = git@github.com:constructor-robotics/micron_driver_ros.git
+[submodule "src/ping360_sonar"]
+	path = src/ping360_sonar
+	url = git@github.com:constructor-robotics/ping360_sonar.git
+[submodule "src/ping360_sonar_msgs"]
+	path = src/ping360_sonar_msgs
+	url = git@github.com:constructor-robotics/ping360_sonar_msgs.git
+[submodule "src/px4-ros2-interface-lib"]
+	path = src/px4-ros2-interface-lib
+	url = git@github.com:Auterion/px4-ros2-interface-lib.git
+[submodule "src/px4_msgs"]
+	path = src/px4_msgs
+	url = git@github.com:timzarhansen/px4_msgs.git
+	branch = uuv_bluerov

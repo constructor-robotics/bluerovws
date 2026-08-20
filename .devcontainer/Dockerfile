@@ -69,7 +69,7 @@ RUN sudo apt install openssh-client -y
 RUN mkdir /home/$USERNAME/volumeROS
 RUN mkdir /home/$USERNAME/ros_ws
 
-RUN sudo DEBIAN_FRONTEND=noninteractive sudo rosdep init && sudo rosdep update --rosdistro $ROS_DISTRO # buildkit
+RUN sudo DEBIAN_FRONTEND=noninteractive sudo rosdep init && sudo rosdep update --rosdistro $ROS_DISTRO && sudo -u $USERNAME rosdep update --rosdistro $ROS_DISTRO # buildkit
 
 
 WORKDIR /home/$USERNAME/

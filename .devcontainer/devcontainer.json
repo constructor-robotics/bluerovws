@@ -9,7 +9,7 @@
 		"ROS_DISTRO": "humble",
 		"ROS_DOMAIN_ID": "161"
 	},
-	"postCreateCommand": "bash -lc 'cd ~/ros_ws && rosdep install --from-paths src --ignore-src --rosdistro humble -y'",
+	"postCreateCommand": "bash -lc 'rosdep update && cd ~/ros_ws && rosdep install --from-paths src --ignore-src --rosdistro humble -y'",
 	"customizations": {
 		"vscode": {
 			"extensions": [

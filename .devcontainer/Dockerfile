@@ -5,9 +5,7 @@ FROM ubuntu:22.04
 ARG USERNAME=bluerovuser
 ARG USER_UID=1001
 ARG USER_GID=$USER_UID
-#ARG DEBIAN_FRONTEND=noninteractive
 ENV ROS_DISTRO=humble
-#ARG DEBIAN_FRONTEND=noninteractive
 
 # Create the user
 RUN groupadd --gid $USER_GID $USERNAME \
@@ -72,14 +70,10 @@ RUN if [ -d /opt/ros/humble/include/cv_bridge/cv_bridge ]; then \
 # additionally need the ROOT include dir - make colcon pass it to all builds.
 RUN sudo mkdir -p /etc/colcon && printf 'build:\n  cmake-args:\n    - "-DCMAKE_CXX_FLAGS=-isystem /opt/ros/humble/include"\n' | sudo tee /etc/colcon/defaults.yaml > /dev/null
 
-#COPY otherPackages/PX4-Autopilot/Tools/setup/ubuntu.sh /home/$USERNAME/install_ws
-#WORKDIR /home/$USERNAME/install_ws
-#RUN mkdir -p -m 0600 ~/.ssh
-#RUN sudo ssh-keyscan github.com >> ~/.ssh/known_hosts
 RUN mkdir /home/$USERNAME/volumeROS
 RUN mkdir /home/$USERNAME/ros_ws
 
-RUN sudo DEBIAN_FRONTEND=noninteractive sudo rosdep init && rosdep update --rosdistro $ROS_DISTRO # buildkit
+RUN sudo DEBIAN_FRONTEND=noninteractive sudo rosdep init && rosdep update --rosdistro $ROS_DISTRO
 
 
 WORKDIR /home/$USERNAME/
@@ -98,10 +92,6 @@ RUN echo "source /opt/ros/humble/setup.bash">> ~/.profile
 RUN echo "[ -f /home/$USERNAME/ros_ws/install/setup.bash ] && source /home/$USERNAME/ros_ws/install/setup.bash 2>/dev/null">> ~/.profile
 RUN echo "export ROS_DOMAIN_ID=161">> ~/.profile
 
-
-# COPY docker-entrypoint.sh /
-# RUN chmod +x /docker-entrypoint.sh
-# ENTRYPOINT [ "/docker-entrypoint.sh" ]
 
 RUN sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
  CMD ["/bin/sh", "-c", "while sleep 1000; do :; done"]

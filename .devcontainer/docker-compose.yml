@@ -10,7 +10,8 @@ services:
       - /dev/shm:size=4g   # increased to 4GB
     environment:
       - DISPLAY=${DISPLAY:-:0}
-      - LIBGL_ALWAYS_INDIRECT=1
+      # Mac (XQuartz) needs indirect GLX; Linux uses direct - unset/export 0 there
+      - LIBGL_ALWAYS_INDIRECT=${LIBGL_ALWAYS_INDIRECT:-1}
       - ROS_DOMAIN_ID=161
     ulimits:
       memlock:

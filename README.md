@@ -2,16 +2,39 @@
 
 This is a ROS2 (Humble) workspace for the BlueROV2 and works with Docker + devcontainer.
 It supports VSCode (Dev Containers: "Reopen in Container") and CLion (devcontainer attach).
-On Linux the GUI display needs to be addressed in docker-compose.
 
 Steps to do (fresh clone):
 1. Initialize the submodules: `git submodule update --init --recursive`
 2. Launch the devcontainer. The first start builds the image and installs the
-   workspace dependencies automatically (rosdep install).
+   workspace dependencies automatically (rosdep install), including fixing the
+   permissions of the build dirs.
 3. Compile the ROS2 workspace: `cd ~/ros_ws && colcon build`
 4. The packages in src/ are git submodules and live in their own repositories
    (see src/README.md). Update them inside the submodule first, then bump the
    pointer in bluerovws.
+
+## GUI / visualization
+
+- **Foxglove (recommended, works everywhere):**
+  `ros2 run foxglove_bridge foxglove_bridge --ros-args -p port:=8765`, then open
+  `http://localhost:8765` in a browser and load `config/BlueROVView.json`.
+- **rviz2 inside the container:**
+  Linux hosts render with direct GL — unset `LIBGL_ALWAYS_INDIRECT` (or
+  `export LIBGL_ALWAYS_INDIRECT=0` before starting the container).
+  macOS/XQuartz needs indirect GL (`LIBGL_ALWAYS_INDIRECT=1`), which is the
+  compose default (`${LIBGL_ALWAYS_INDIRECT:-1}`). XQuartz must be running
+  before the container starts (`open -a XQuartz`, then `xhost +` on the Mac).
+
+## Known quirks
+
+- The arm64 rebuilds of the Humble packages ship the *new* nested header layout
+  (`cv_bridge/cv_bridge/cv_bridge.h`) while the code uses the classic includes.
+  The image adds compatibility symlinks and a root `-isystem` flag (see
+  `bashScripts/debugCvBridge.sh`); amd64 is unaffected.
+- If `colcon build` fails with permission errors in `~/ros_ws/build|install|log`,
+  the mount dirs were created as root on first start; the devcontainer
+  self-heals this on every rebuild. Alternatively:
+  `sudo chown -R $(id -u):$(id -g) ~/ros_ws/build ~/ros_ws/install ~/ros_ws/log`
 
 # Network 
 Base Station Config Linux

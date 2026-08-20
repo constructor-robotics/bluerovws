@@ -97,5 +97,4 @@ RUN echo "export ROS_DOMAIN_ID=161">> ~/.profile
 # RUN chmod +x /docker-entrypoint.sh
 # ENTRYPOINT [ "/docker-entrypoint.sh" ]
 
- CMD ["/bin/bash"]
-#CMD ["sleep", "infinity"]
+ CMD ["/bin/sh", "-c", "while sleep 1000; do :; done"]

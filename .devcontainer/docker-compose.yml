@@ -4,8 +4,8 @@ services:
       context: ..
       dockerfile: .devcontainer/Dockerfile
 #      network: host
-#    command: /bin/sh -c "while sleep 1000; do :; done"
-    # command: sleep infinity
+    # keep the container alive: a bare bash exits immediately without a TTY
+    command: ["/bin/sh", "-c", "while sleep 1000; do :; done"]
     privileged: true    # <-- this one
     tmpfs:
      - /dev/shm:size=4g  # Increased to 4GB

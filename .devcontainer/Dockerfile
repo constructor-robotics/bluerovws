@@ -63,12 +63,18 @@ RUN sudo apt install unzip nano net-tools nmap inetutils-ping -y
 RUN sudo apt install openssh-client -y
 # workspace deps not included in ros-desktop: cv_bridge (sonar/camera viz), tf2 (IMU)
 RUN sudo apt install -y ros-$ROS_DISTRO-cv-bridge ros-$ROS_DISTRO-tf2 ros-$ROS_DISTRO-tf2-ros
-# vision_opencv on this image installs the new double-nested header layout
-# (cv_bridge/cv_bridge/cv_bridge.h) while the packages include the classic
-# <cv_bridge/cv_bridge.hpp> — provide compatibility symlinks (root and nested
-# level, matching the -isystem prefixes the packages' CMake actually uses).
-RUN sudo ln -s /opt/ros/humble/include/cv_bridge/cv_bridge/cv_bridge.h /opt/ros/humble/include/cv_bridge/cv_bridge.hpp
-RUN sudo ln -s cv_bridge.h /opt/ros/humble/include/cv_bridge/cv_bridge/cv_bridge.hpp
+# The arm64 rebuilds of the Humble packages use the new nested header layout
+# (include/cv_bridge/cv_bridge/cv_bridge.h) while the packages include the
+# classic <cv_bridge/cv_bridge.hpp>. Add compat symlinks ONLY where the nested
+# layout exists (arm64) - on amd64 the classic headers are already in place.
+RUN if [ -d /opt/ros/humble/include/cv_bridge/cv_bridge ]; then \
+        ln -s cv_bridge/cv_bridge.h /opt/ros/humble/include/cv_bridge/cv_bridge.hpp; \
+        ln -s cv_bridge.h /opt/ros/humble/include/cv_bridge/cv_bridge/cv_bridge.hpp; \
+    fi
+# The arm64 rebuilds use pkg-scoped -isystem dirs (include/<pkg>); the classic
+# includes (<pkg>/...) and transitive core headers (rosidl_runtime_cpp/...)
+# additionally need the ROOT include dir - make colcon pass it to all builds.
+RUN printf 'build:\n  cmake-args:\n    - "-DCMAKE_CXX_FLAGS=-isystem /opt/ros/humble/include"\n' > /etc/colcon/defaults.yaml
 
 #COPY otherPackages/PX4-Autopilot/Tools/setup/ubuntu.sh /home/$USERNAME/install_ws
 #WORKDIR /home/$USERNAME/install_ws

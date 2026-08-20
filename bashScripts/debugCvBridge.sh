@@ -16,9 +16,16 @@ echo "== 1. Header layout =="
 ls -la /opt/ros/humble/include/cv_bridge/
 
 echo
-echo "== 2. Applying compatibility symlink (nested level - matches the build's -isystem prefix) =="
-sudo ln -sf cv_bridge.h /opt/ros/humble/include/cv_bridge/cv_bridge/cv_bridge.hpp
-ls -la /opt/ros/humble/include/cv_bridge/cv_bridge/cv_bridge.hpp
+echo "== 2. Applying compatibility symlinks (root + nested level, arm64 only) =="
+if [ -d /opt/ros/humble/include/cv_bridge/cv_bridge ]; then
+    echo "arm64 nested layout detected - creating classic-name symlinks"
+    sudo ln -sf cv_bridge/cv_bridge.h /opt/ros/humble/include/cv_bridge/cv_bridge.hpp
+    sudo ln -sf cv_bridge.h /opt/ros/humble/include/cv_bridge/cv_bridge/cv_bridge.hpp
+else
+    echo "classic layout detected (amd64) - no symlinks needed"
+fi
+ls -la /opt/ros/humble/include/cv_bridge/cv_bridge.hpp 2>&1
+ls -la /opt/ros/humble/include/cv_bridge/cv_bridge/cv_bridge.hpp 2>&1
 
 echo
 echo "== 3. Minimal compile test with the build's actual flag set =="
@@ -44,7 +51,7 @@ rm -rf "$tmpdir"
 echo
 echo "== 4. Rebuild the previously failing packages =="
 cd ~/ros_ws || exit 0
-colcon build --packages-select micron_driver_ros ping360_sonar gui_bluerov
+colcon build --packages-up-to micron_driver_ros ping360_sonar gui_bluerov
 
 echo
 echo "Done. If all green, run a full build with:  colcon build  (in ~/ros_ws)"

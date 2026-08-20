@@ -1,0 +1,16 @@
+{
+  "ros.distro": "humble",
+  "ros.buildType": "colcon",
+  "ros.rosSetupEnvFile": "/opt/ros/humble/setup.bash",
+  "python.analysis.extraPaths": [
+    "/home/bluerovuser/ros_ws/install/local/lib/python3.10/dist-packages"
+  ],
+  "cmake.configureOnOpen": false,
+  "search.exclude": {
+    "cache/**": true,
+    "**/cmake-build-debug/**": true
+  },
+  "files.exclude": {
+    "cache": true
+  }
+}

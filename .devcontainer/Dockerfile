@@ -11,7 +11,7 @@ ENV ROS_DISTRO=humble
 
 # Create the user
 RUN groupadd --gid $USER_GID $USERNAME \
-    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m -s /bin/bash $USERNAME \
     #
     # [Optional] Add sudo support. Omit if you don't need to istall software after connecting.
     && apt update \
@@ -27,10 +27,10 @@ USER $USERNAME
 WORKDIR /home/$USERNAME/install_ws
 
 #ROS
-RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt update && sudo apt install locales
+RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt update && sudo DEBIAN_FRONTEND=noninteractive sudo apt install -y locales
 RUN sudo DEBIAN_FRONTEND=noninteractive sudo locale-gen de_DE de_DE.UTF-8
 RUN sudo DEBIAN_FRONTEND=noninteractive sudo update-locale LC_ALL=de_DE.UTF-8 LANG=de_DE.UTF-8
-RUN export LANG=de_DE.UTF-8
+ENV LANG=de_DE.UTF-8 LC_ALL=de_DE.UTF-8
 RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt-get install -y tzdata
 RUN sudo DEBIAN_FRONTEND=noninteractive sudo apt install -y libboost-all-dev bash-completion
 
@@ -66,7 +66,7 @@ RUN sudo apt install openssh-client -y
 #WORKDIR /home/$USERNAME/install_ws
 #RUN mkdir -p -m 0600 ~/.ssh
 #RUN sudo ssh-keyscan github.com >> ~/.ssh/known_hosts
-RUN #mkdir /home/$USERNAME/volumeROS
+RUN mkdir /home/$USERNAME/volumeROS
 RUN mkdir /home/$USERNAME/ros_ws
 
 RUN sudo DEBIAN_FRONTEND=noninteractive sudo rosdep init && sudo rosdep update --rosdistro $ROS_DISTRO # buildkit
@@ -85,11 +85,11 @@ RUN echo "PS1='\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\
 RUN #echo "source activate base">> ~/.bashrc
 RUN #echo "COLCON_DEFAULTS_FILE=/home/$USERNAME/ros_ws/configFiles/defaultColconSettings.yaml">> ~/.bashrc
 RUN echo "source /opt/ros/humble/setup.bash">> ~/.bashrc
-RUN echo "source /home/$USERNAME/ros_ws/install/setup.bash">> ~/.bashrc
+RUN echo "[ -f /home/$USERNAME/ros_ws/install/setup.bash ] && source /home/$USERNAME/ros_ws/install/setup.bash">> ~/.bashrc
 RUN echo "export ROS_DOMAIN_ID=161">> ~/.bashrc
 # profile because of clion connection, so that you can compile ROS inside the IDE
 RUN echo "source /opt/ros/humble/setup.bash">> ~/.profile
-RUN echo "source /home/$USERNAME/ros_ws/install/setup.bash">> ~/.profile
+RUN echo "[ -f /home/$USERNAME/ros_ws/install/setup.bash ] && source /home/$USERNAME/ros_ws/install/setup.bash">> ~/.profile
 RUN echo "export ROS_DOMAIN_ID=161">> ~/.profile
 
 

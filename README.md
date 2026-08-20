@@ -1,17 +1,17 @@
 # BlueROV2 Workspace ROS2
 
-This is a workspace to be working with Docker and Mac. Making it work on Linux should be straight forward.
-Difference to Linux: The display of GUI needs to be addressed in docker-compose.
-Additionally, this is designed to work with CLion devcontainer. Not designed for VSCode
+This is a ROS2 (Humble) workspace for the BlueROV2 and works with Docker + devcontainer.
+It supports VSCode (Dev Containers: "Reopen in Container") and CLion (devcontainer attach).
+On Linux the GUI display needs to be addressed in docker-compose.
 
-Steps to do:
-1. download the packages in src. to be compiled. the folders are out of this git reposetory. Therefore, they need to be updated independently, if you want to push your changes there.
-2. Launch devcontainer.
-3. Compile the ros2 ws in ~/ros_ws
-
-
-
-
+Steps to do (fresh clone):
+1. Initialize the submodules: `git submodule update --init --recursive`
+2. Launch the devcontainer. The first start builds the image and installs the
+   workspace dependencies automatically (rosdep install).
+3. Compile the ROS2 workspace: `cd ~/ros_ws && colcon build`
+4. The packages in src/ are git submodules and live in their own repositories
+   (see src/README.md). Update them inside the submodule first, then bump the
+   pointer in bluerovws.
 
 # Network 
 Base Station Config Linux
@@ -35,11 +35,4 @@ MACOS:
 
 
 
-foxglove integration: Located at [BlueROVView.json](config/BlueROVView.json) 
-
-
-
-
-
-
-
+foxglove integration: Located at [BlueROVView.json](config/BlueROVView.json)

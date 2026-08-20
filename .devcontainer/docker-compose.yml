@@ -38,10 +38,11 @@ services:
         hard: -1
 
     volumes:
+      - ..:/home/bluerovuser/volumeROS:cached
       - ../cache/humble/build:/home/bluerovuser/ros_ws/build
-      - ../cache/humble/install:/home/bluerovuser/ros_ws/install:cached,
-      - ../cache/humble/log:/home/bluerovuser/ros_ws/log:cached,
-      - ../src:/home/bluerovuser/ros_ws/src:cached,
+      - ../cache/humble/install:/home/bluerovuser/ros_ws/install:cached
+      - ../cache/humble/log:/home/bluerovuser/ros_ws/log:cached
+      - ../src:/home/bluerovuser/ros_ws/src:cached
       - /tmp/.X11-unix:/tmp/.X11-unix
 #    ports:
 #      - "8080:80"

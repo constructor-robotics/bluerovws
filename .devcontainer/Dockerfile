@@ -61,6 +61,14 @@ RUN sudo apt install libqt5gamepad5-dev -y
 RUN sudo apt install libcgal-dev -y
 RUN sudo apt install unzip nano net-tools nmap inetutils-ping -y
 RUN sudo apt install openssh-client -y
+# workspace deps not included in ros-desktop: cv_bridge (sonar/camera viz), tf2 (IMU)
+RUN sudo apt install -y ros-$ROS_DISTRO-cv-bridge ros-$ROS_DISTRO-tf2 ros-$ROS_DISTRO-tf2-ros
+# vision_opencv on this image installs the new double-nested header layout
+# (cv_bridge/cv_bridge/cv_bridge.h) while the packages include the classic
+# <cv_bridge/cv_bridge.hpp> — provide compatibility symlinks (root and nested
+# level, matching the -isystem prefixes the packages' CMake actually uses).
+RUN sudo ln -s /opt/ros/humble/include/cv_bridge/cv_bridge/cv_bridge.h /opt/ros/humble/include/cv_bridge/cv_bridge.hpp
+RUN sudo ln -s cv_bridge.h /opt/ros/humble/include/cv_bridge/cv_bridge/cv_bridge.hpp
 
 #COPY otherPackages/PX4-Autopilot/Tools/setup/ubuntu.sh /home/$USERNAME/install_ws
 #WORKDIR /home/$USERNAME/install_ws
